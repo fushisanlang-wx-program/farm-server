@@ -1,4 +1,4 @@
-module farm-web
+module farm
 
 go 1.15
 
