@@ -19,27 +19,15 @@ func Run() {
 	//服务定义
 	s := g.Server()
 	//session相关
-
 	s.SetSessionMaxAge(time.Hour)
-	s.SetSessionStorage(gsession.NewStorageRedis(g.Redis()))
-
-	s.BindHandler("/", api.RootPage)
+	s.SetSessionStorage(gsession.NewStorageRedis(g.Redis("session")))
+	//s.BindHandler("/", api.RootPage)
 	//group := s.Group("/status")
 	//服务器版本
 	//group.ALL("/version", api.GetVersion)
 	group := s.Group("/user")
-	group.ALL("/signin", api.SignIn)
-	group.ALL("/verify", api.VerifyUser)
-	group.ALL("/register", api.Register)
-	group.ALL("/registerverify", api.RegisterVerify)
-	group = s.Group("/role")
-	group.ALL("/info", api.RoleInfo)
-	group.ALL("/create/page1", api.RoleCreatePage1)
-	group.ALL("/create/page1/verify", api.RoleCreatePage1Verify)
-	group.ALL("/create/page2", api.RoleCreatePage2)
-	group.ALL("/create/page2/verify", api.RoleCreatePage2Verify)
-	group.ALL("/create/page3", api.RoleCreatePage3)
-	group.ALL("/create/page3/verify", api.RoleCreatePage3Verify)
-	//启动web
+	group.POST("/register", api.Register)
+	group.POST("/signin", api.SignIn)
+
 	s.Run()
 }

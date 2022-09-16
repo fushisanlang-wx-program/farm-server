@@ -6,19 +6,19 @@ redis:
   default: #default
     address: fushisanlang.cn:6380
     db: 0
-    pass: fushisanlang_redis
+    pass: redis
   session: #session
     address: fushisanlang.cn:6380
     db: 1
-    pass: fushisanlang_redis
+    pass: redis
   config: #save config data
     address: fushisanlang.cn:6380
     db: 2
-    pass: fushisanlang_redis
+    pass: redis
   data: #save game data
     address: fushisanlang.cn:6380
     db: 3
-    pass: fushisanlang_redis
+    pass: redis
 server: #server port
   address: 34567
 status: #game status
