@@ -1,9 +1,3 @@
-/*
-@Time : 2022/8/30 10:51
-@Author : fushisanlang
-@File : grand.go
-@Software: GoLand
-*/
 package main
 
 import (

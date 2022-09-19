@@ -1,9 +1,3 @@
-/*
-@Time : 2022/8/29 14:50
-@Author : fushisanlang
-@File : user
-@Software: GoLand
-*/
 package service
 
 import (

@@ -1,9 +1,3 @@
-/*
-@Time : 2022/9/1 15:15
-@Author : fushisanlang
-@File : test
-@Software: GoLand
-*/
 package main
 
 import (

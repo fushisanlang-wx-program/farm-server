@@ -1,9 +1,3 @@
-/*
-@Time : 2022/8/29 14:52
-@Author : fushisanlang
-@File : user
-@Software: GoLand
-*/
 package dao
 
 import (
