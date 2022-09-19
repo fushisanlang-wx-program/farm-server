@@ -12,4 +12,7 @@ type UserRegisterStruct struct {
 	Password   string
 	Uid        string
 	ReliveTime int
+	FieldCount int
+	Money      int
+	Ex         int
 }

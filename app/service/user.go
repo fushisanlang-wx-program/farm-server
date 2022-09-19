@@ -3,10 +3,11 @@ package service
 import (
 	"farm/app/dao"
 	"farm/app/model"
+	"fmt"
+
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/util/gconv"
 
-	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/util/guid"
 )
 
@@ -39,20 +40,28 @@ func VerifySession(r *ghttp.Request) (bool, string, string) {
 
 }
 func RegisterUser(UserName, UserMail, Password string) {
+	UId := guid.S()
 
-	RegisterUser := g.Map{
-		"UserName":   UserName,
-		"Password":   Password,
-		"UserMail":   UserMail,
-		"ReliveTime": 0,
-		"Uid":        guid.S(),
+	RegisterUser := model.UserRegisterStruct{
+		UserName:   UserName,
+		Password:   Password,
+		EMail:      UserMail,
+		ReliveTime: 0,
+		Uid:        UId,
+		FieldCount: 6,
+		Money:      2000,
 	}
 
 	dao.RegisterUser(UserName, RegisterUser)
+	registerFarm(UserName, UId)
+	for i := 1; i < 7; i++ {
+		OpenField(UserName, UId)
+	}
 }
 func VerifyUser(userName, password string) bool {
 	if VerifyUserExist(userName) == true {
-		passwordTrue := dao.VerifyUser(userName).Password
+		passwordTrue := dao.GetUserPass(userName)
+		fmt.Println(passwordTrue)
 		if password == passwordTrue {
 			return true
 		} else {
@@ -63,19 +72,19 @@ func VerifyUser(userName, password string) bool {
 	}
 }
 func GetUid(userName string) string {
-	userStruct := dao.GetUid(userName)
-	if userStruct == nil {
-		return ""
-	} else {
-		Uid := userStruct.Uid
+	if VerifyUserExist(userName) == true {
+		Uid := dao.GetUid(userName)
 		return Uid
+	} else {
+		return ""
 	}
 }
-func GetUserInfo(userName string) *model.UserRegisterStruct {
-	userStruct := dao.GetUid(userName)
-	return userStruct
-}
 
+//func GetUserInfo(userName string) *model.UserRegisterStruct {
+//	userStruct := dao.GetUid(userName)
+//	return userStruct
+//}
+//
 /*
 //获取session中的username
 func GetSessionUserName(r *ghttp.Request) (bool, interface{}) {

@@ -28,6 +28,8 @@ func Run() {
 	group := s.Group("/user")
 	group.POST("/register", api.Register)
 	group.POST("/signin", api.SignIn)
+	group = s.Group("/field")
+	group.POST("/signin", api.SignIn)
 
 	s.Run()
 }

@@ -2,9 +2,11 @@ package dao
 
 import (
 	"farm/app/model"
+
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/gogf/gf/v2/util/gconv"
+	"github.com/gogf/gf/v2/util/gutil"
 )
 
 func VerifyUserExist(userName string) bool {
@@ -23,47 +25,49 @@ func VerifyUserExist(userName string) bool {
 	}
 
 }
-func RegisterUser(UserName string, RegisterUser g.Map) {
+func RegisterUser(UserName string, RegisterUser model.UserRegisterStruct) {
 	var (
 		ctx = gctx.New()
 	)
-	_, err := g.Redis("data").Do(ctx, "SET", UserName, RegisterUser)
+	_, err := g.Redis("data").Do(ctx, "HMSET", append(g.Slice{UserName}, gutil.StructToSlice(RegisterUser)...)...)
 	if err != nil {
 		panic(err)
 	}
 }
-func VerifyUser(userName string) *model.UserRegisterStruct {
+func GetUserPass(userName string) string {
 
 	var (
 		ctx = gctx.New()
-		key = userName
 	)
-	result, err := g.Redis("data").Do(ctx, "GET", key)
-
+	result, err := g.Redis("data").Do(ctx, "HMGET", userName, "Password")
 	if err != nil {
 		panic(err)
 	}
 
-	var UserStruct *model.UserRegisterStruct
-	if err = result.Struct(&UserStruct); err != nil {
-		panic(err)
-	}
-	return UserStruct
+	return gconv.String(result.Array()[0])
 }
-func GetUid(userName string) *model.UserRegisterStruct {
+func GetUid(userName string) string {
 
 	var (
 		ctx = gctx.New()
-		key = userName
 	)
-	result, err := g.Redis("data").Do(ctx, "GET", key)
+	result, err := g.Redis("data").Do(ctx, "HMGET", userName, "Uid")
 
 	if err != nil {
 		panic(err)
 	}
-	var UserStruct *model.UserRegisterStruct
-	if err = result.Struct(&UserStruct); err != nil {
+
+	return gconv.String(result.Array()[0])
+}
+
+func GetUserInfoFieldCount(userName string) int {
+	var (
+		ctx = gctx.New()
+	)
+	result, err := g.Redis("data").Do(ctx, "HMGET", userName, "FieldCount")
+	if err != nil {
 		panic(err)
 	}
-	return UserStruct
+
+	return gconv.Int(result.Array()[0])
 }
