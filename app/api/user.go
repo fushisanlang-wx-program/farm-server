@@ -7,45 +7,42 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 )
 
-func Register(r *ghttp.Request) {
-	UserName := r.Get("UserName").String()
-	Password := r.Get("Password").String()
-	UserMail := r.Get("UserMail").String()
+func UserRegister(r *ghttp.Request) {
+	userName := r.Get("UserName").String()
+	password := r.Get("Password").String()
+	userMail := r.Get("UserMail").String()
 
-	if UserName == "" || Password == "" || UserMail == "" {
-		ReturnErrCode(r, 417, "用户登录失败，数据空")
-	} else if service.VerifyUserExist(UserName) == false {
-		service.RegisterUser(UserName, UserMail, Password)
+	if userName == "" || password == "" || userMail == "" {
+		returnErrCode(r, 417, "用户登录失败，数据空")
+	} else if service.VerifyUserExist(userName) == false {
+		service.RegisterUser(userName, userMail, password)
 		r.Response.WriteJson(g.Map{
-			"Message": "用户注册成功",
-			"name":    UserName,
-			"email":   UserMail,
-			"code":    200,
+			"message": "用户注册成功",
+			"name":    userName,
+			"email":   userMail,
 		})
 
 	} else {
-		ReturnErrCode(r, 423, "用户注册失败，用户名冲突")
+		returnErrCode(r, 423, "用户注册失败，用户名冲突")
 
 	}
 }
 
-func SignIn(r *ghttp.Request) {
-	UserName := r.Get("UserName").String()
-	Password := r.Get("Password").String()
-	if UserName == "" || Password == "" {
-		ReturnErrCode(r, 417, "用户登录失败，数据空")
-	} else if service.VerifyUser(UserName, Password) == true {
-		Uid := service.GetUid(UserName)
-		r.Session.Set("UserName", UserName)
+func UserSignIn(r *ghttp.Request) {
+	userName := r.Get("UserName").String()
+	password := r.Get("Password").String()
+	if userName == "" || password == "" {
+		returnErrCode(r, 417, "用户登录失败，数据空")
+	} else if service.VerifyUser(userName, password) == true {
+		Uid := service.GetUid(userName)
+		r.Session.Set("userName", userName)
 		r.Session.Set("Uid", Uid)
 		r.Response.WriteJson(g.Map{
-			"Message":  "用户登录成功",
-			"UserName": UserName,
-			"Uid":      Uid,
-			"code":     200,
+			"message":  "用户登录成功",
+			"userName": userName,
 		})
 	} else {
-		ReturnErrCode(r, 401, "用户登录失败,账户密码不匹配")
+		returnErrCode(r, 401, "用户登录失败,账户密码不匹配")
 
 	}
 }

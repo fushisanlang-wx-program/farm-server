@@ -1,42 +1,52 @@
 package service
 
-func GetLevel(Ex int) int {
-	Level := 0
+import "farm/app/dao"
+
+func GetLevel(ex int) int {
+	level := 0
 	switch {
-	case Ex < 200:
-		Level = 0
-	case Ex >= 200 && Ex < 600:
-		Level = 1
-	case Ex >= 600 && Ex < 1200:
-		Level = 2
-	case Ex >= 1200 && Ex < 2000:
-		Level = 3
-	case Ex >= 2000 && Ex < 3000:
-		Level = 4
-	case Ex >= 3000 && Ex < 4200:
-		Level = 5
-	case Ex >= 4200 && Ex < 5600:
-		Level = 6
-	case Ex >= 5600 && Ex < 7200:
-		Level = 7
-	case Ex >= 7200 && Ex < 9000:
-		Level = 8
-	case Ex >= 9000 && Ex < 11000:
-		Level = 9
-	case Ex >= 11000 && Ex < 13200:
-		Level = 10
-	case Ex >= 13200 && Ex < 15600:
-		Level = 11
-	case Ex >= 15600 && Ex < 18200:
-		Level = 12
-	case Ex >= 18200 && Ex < 21000:
-		Level = 13
-	case Ex >= 21000 && Ex < 24000:
-		Level = 14
-	case Ex >= 24000:
-		Level = 15
+	case ex < 200:
+		level = 0
+	case ex >= 200 && ex < 600:
+		level = 1
+	case ex >= 600 && ex < 1200:
+		level = 2
+	case ex >= 1200 && ex < 2000:
+		level = 3
+	case ex >= 2000 && ex < 3000:
+		level = 4
+	case ex >= 3000 && ex < 4200:
+		level = 5
+	case ex >= 4200 && ex < 5600:
+		level = 6
+	case ex >= 5600 && ex < 7200:
+		level = 7
+	case ex >= 7200 && ex < 9000:
+		level = 8
+	case ex >= 9000 && ex < 11000:
+		level = 9
+	case ex >= 11000 && ex < 13200:
+		level = 10
+	case ex >= 13200 && ex < 15600:
+		level = 11
+	case ex >= 15600 && ex < 18200:
+		level = 12
+	case ex >= 18200 && ex < 21000:
+		level = 13
+	case ex >= 21000 && ex < 24000:
+		level = 14
+	case ex >= 24000:
+		level = 15
 
 	}
-	return Level
+	return level
 
+}
+func getEx(userName string) int {
+	ex := dao.GetEx(userName)
+	return ex
+}
+func ChangeEx(userName string, ex int) {
+	dao.ChangeEx(userName, ex)
+	//增加判断是否升级，
 }

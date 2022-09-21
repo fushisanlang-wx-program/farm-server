@@ -8,9 +8,10 @@ package app
 
 import (
 	"farm/app/api"
+	"time"
+
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gsession"
-	"time"
 )
 
 func Run() {
@@ -26,10 +27,17 @@ func Run() {
 	//服务器版本
 	//group.ALL("/version", api.GetVersion)
 	group := s.Group("/user")
-	group.POST("/register", api.Register)
-	group.POST("/signin", api.SignIn)
+	group.POST("/register", api.UserRegister)
+	group.POST("/signin", api.UserSignIn)
 	group = s.Group("/field")
-	group.POST("/signin", api.SignIn)
-
+	group.GET("/info", api.FieldInfo)
+	group.GET("/info/{fieldId}", api.FieldInfoById)
+	group.GET("/open", api.FieldOpen)
+	group.POST("/plant", api.FieldPlant)
+	group.POST("/harvest", api.FieldHarvest)
+	group.POST("/upgrade", api.FieldUpgrade)
+	group.POST("/eradicate", api.FieldEradicate)
+	group = s.Group("/bag")
+	group.GET("/info", api.BagInfo)
 	s.Run()
 }

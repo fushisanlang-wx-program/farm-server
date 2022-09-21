@@ -14,22 +14,22 @@ func VerifyUserExist(userName string) bool {
 		ctx = gctx.New()
 		key = userName
 	)
-	UserExistStatus, err := g.Redis("data").Do(ctx, "exists", key)
+	userExistStatus, err := g.Redis("data").Do(ctx, "exists", key)
 	if err != nil {
 		panic(err)
 	}
-	if gconv.Int(UserExistStatus) == 0 {
+	if gconv.Int(userExistStatus) == 0 {
 		return false
 	} else {
 		return true
 	}
 
 }
-func RegisterUser(UserName string, RegisterUser model.UserRegisterStruct) {
+func RegisterUser(userName string, registerUser model.UserRegisterStruct) {
 	var (
 		ctx = gctx.New()
 	)
-	_, err := g.Redis("data").Do(ctx, "HMSET", append(g.Slice{UserName}, gutil.StructToSlice(RegisterUser)...)...)
+	_, err := g.Redis("data").Do(ctx, "HMSET", append(g.Slice{userName}, gutil.StructToSlice(registerUser)...)...)
 	if err != nil {
 		panic(err)
 	}

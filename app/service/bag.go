@@ -5,15 +5,18 @@ import (
 	"farm/app/model"
 )
 
-func registerBag(UserName, uId string) {
-	for i := 1; i <= 20; i++ {
-		BagStruct := model.BagStruct{
-			UserId:     uId,
-			BagId:      i,
-			GoodsId:    0,
-			GoodsCount: 0,
-		}
-		dao.RegisterBag(uId, BagStruct)
-
+func registerBag(uId string) {
+	dao.SetBag(uId, 1, 10)
+	for i := 2; i <= 50; i++ {
+		dao.SetBag(uId, i, 0)
 	}
+}
+
+func GetBagInfo(uId string) []model.BagCountStruct {
+	GetBagInfo := dao.GetBagInfo(uId)
+	return GetBagInfo
+
+}
+func SetPlantCount(uId string, plantId, countNum int) {
+	dao.SetBag(uId, plantId, countNum)
 }

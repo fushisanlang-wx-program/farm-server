@@ -1,14 +1,12 @@
 package main
 
 import (
-	"context"
 	"farm/app"
-	"github.com/gogf/gf/v2/frame/g"
+	"farm/app/logger"
 )
 
 func main() {
-	ctx := context.TODO()
-	g.Log().Info(ctx, "程序启动")
+	logger.LogInfo("服务启动")
 	app.Run()
 
 }

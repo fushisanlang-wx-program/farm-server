@@ -6,15 +6,15 @@ import (
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
-func GetMoney(UserName string) int {
+func GetMoney(userName string) int {
 	var (
 		ctx = gctx.New()
 	)
-	result, err := g.Redis("data").Do(ctx, "HMGET", UserName, "Money")
+	result, err := g.Redis("data").Do(ctx, "HMGET", userName, "Money")
 	if err != nil {
 		panic(err)
 	}
-	return result.Int()
+	return gconv.Int(result.Array()[0])
 
 }
 
@@ -22,20 +22,20 @@ func GetOpenFieldNeedMoney(fieldId int) int {
 	var (
 		ctx = gctx.New()
 	)
-	result, err := g.Redis("config").Do(ctx, "HMGET", "field"+gconv.String(fieldId), "Money")
+	result, err := g.Redis("config").Do(ctx, "HMGET", "field_"+gconv.String(fieldId), "Money")
 	if err != nil {
 		panic(err)
 	}
-	LevelNeedEx := result.Int()
-	return LevelNeedEx
+	OpenFieldNeedMoney := gconv.Int(result.Array()[0])
+	return OpenFieldNeedMoney
 
 }
 
-func ChangeMoney(UserName string, Money int) {
+func ChangeMoney(userName string, money int) {
 	var (
 		ctx = gctx.New()
 	)
-	_, err := g.Redis("data").Do(ctx, "HMSET", UserName, "Money", Money)
+	_, err := g.Redis("data").Do(ctx, "HMSET", userName, "Money", money)
 	if err != nil {
 		panic(err)
 	}
