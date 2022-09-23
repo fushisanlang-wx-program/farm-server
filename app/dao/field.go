@@ -51,10 +51,11 @@ func FieldInfoById(uId string, fieldId int) model.FarmFieldInfoStructWithoutUser
 		panic(err)
 	}
 	resultArray := result.Array()
+	plantInfo := GetPlantInfo(gconv.Int(resultArray[2]))
 	fieldInfo := model.FarmFieldInfoStructWithoutUserId{
 		FieldId:        gconv.Int(resultArray[0]),
 		Status:         gconv.Int(resultArray[1]),
-		PlantId:        gconv.Int(resultArray[2]),
+		PlantName:      plantInfo.PlantName,
 		MaturationTime: gconv.Int(resultArray[3]),
 		ReMature:       gconv.Int(resultArray[4]),
 	}

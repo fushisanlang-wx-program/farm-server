@@ -143,21 +143,21 @@ func FieldHarvest(uId, userName string, fieldId int) (bool, model.HarvestInfoStr
 		plantInfo := dao.GetPlantInfo(fieldInfo.PlantId)
 		harvestInfoStruct.PlantName = plantInfo.PlantName
 		harvestInfoStruct.PlantLevel = fieldInfo.ReMature
-		//if fieldInfo.ReMature == 2 {
-		//	harvestInfoStruct.PlantName = "上品" + harvestInfoStruct.PlantName
-		//}
-		//if fieldInfo.ReMature == 3 {
-		//	harvestInfoStruct.PlantName = "精品" + harvestInfoStruct.PlantName
-		//}
-		//if fieldInfo.ReMature == 4 {
-		//	harvestInfoStruct.PlantName = "珍品" + harvestInfoStruct.PlantName
-		//}
-		//if fieldInfo.ReMature == 5 {
-		//	harvestInfoStruct.PlantName = "极品" + harvestInfoStruct.PlantName
-		//}
-		//if fieldInfo.ReMature == 6 {
-		//	harvestInfoStruct.PlantName = "绝品" + harvestInfoStruct.PlantName
-		//}
+		if fieldInfo.ReMature == 2 {
+			harvestInfoStruct.PlantName = "上品" + harvestInfoStruct.PlantName
+		}
+		if fieldInfo.ReMature == 3 {
+			harvestInfoStruct.PlantName = "精品" + harvestInfoStruct.PlantName
+		}
+		if fieldInfo.ReMature == 4 {
+			harvestInfoStruct.PlantName = "珍品" + harvestInfoStruct.PlantName
+		}
+		if fieldInfo.ReMature == 5 {
+			harvestInfoStruct.PlantName = "极品" + harvestInfoStruct.PlantName
+		}
+		if fieldInfo.ReMature == 6 {
+			harvestInfoStruct.PlantName = "绝品" + harvestInfoStruct.PlantName
+		}
 
 		//计算经验 ,经验*成熟次数
 		harvestInfoStruct.AddEx = plantInfo.Ex * fieldInfo.ReMature
