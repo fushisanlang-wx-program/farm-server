@@ -56,6 +56,7 @@ func FieldInfoById(uId string, fieldId int) model.FarmFieldInfoStructWithoutUser
 		FieldId:        gconv.Int(resultArray[0]),
 		Status:         gconv.Int(resultArray[1]),
 		PlantName:      plantInfo.PlantName,
+		PlantId:        plantInfo.PlantId,
 		MaturationTime: gconv.Int(resultArray[3]),
 		ReMature:       gconv.Int(resultArray[4]),
 	}
@@ -67,8 +68,7 @@ func FieldInfoById(uId string, fieldId int) model.FarmFieldInfoStructWithoutUser
 		//成熟次数+1次
 		fieldInfo.ReMature = fieldInfo.ReMature + 1
 		//再判断作物可否再次生长,再次成熟时间
-		result, err = g.Redis("config").Do(ctx, "HMGET", fieldInfo.PlantId, "ReMatureCount")
-		plantReMatureCount := gconv.Int(result.Array()[0]) + 1
+		plantReMatureCount := plantInfo.ReMatureCount
 		//plantReMature := gconv.Int(result.Array()[1])
 		//已成熟次数小于可以再成熟次数
 		if fieldInfo.ReMature < plantReMatureCount {
