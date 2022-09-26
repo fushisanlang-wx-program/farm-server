@@ -29,12 +29,12 @@ func StoreBuy(r *ghttp.Request) {
 }
 func StoreList(r *ghttp.Request) {
 
-	//verifyStatus, _, _ := service.VerifySession(r)
-	//if verifyStatus == true {
+	verifyStatus, _, _ := service.VerifySession(r)
+	if verifyStatus == true {
 
-	r.Response.WriteJson(service.StoreList)
+		r.Response.WriteJson(service.StoreList)
 
-	//} else {
-	//	returnErrCode(r, 401, "用户校验失败,请重新登录")
-	//}
+	} else {
+		returnErrCode(r, 401, "用户校验失败,请重新登录")
+	}
 }
