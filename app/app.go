@@ -39,5 +39,9 @@ func Run() {
 	group.POST("/eradicate", api.FieldEradicate)
 	group = s.Group("/bag")
 	group.GET("/info", api.BagInfo)
+	group = s.Group("/store")
+	group.GET("/buy", api.StoreBuy)
+	group.GET("/list", api.StoreList)
+
 	s.Run()
 }

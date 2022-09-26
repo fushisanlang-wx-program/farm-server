@@ -23,7 +23,7 @@ func UserRegister(r *ghttp.Request) {
 		})
 
 	} else {
-		returnErrCode(r, 423, "用户注册失败，用户名冲突")
+		returnErrCode(r, 423, "用户注册失败，用户名已存在")
 
 	}
 }

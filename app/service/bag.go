@@ -20,3 +20,7 @@ func GetBagInfo(uId string) []model.BagCountStruct {
 func SetPlantCount(uId string, plantId, countNum int) {
 	dao.SetBag(uId, plantId, countNum)
 }
+func getPlantCount(uId string, plantId int) int {
+	PlantCount := dao.GetPlantCount(uId, plantId)
+	return PlantCount
+}
