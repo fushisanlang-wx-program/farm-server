@@ -57,7 +57,7 @@ func GetBagInfo(uId string) []model.BagCountStruct {
 			ReMatureCount:    gconv.Int(resultAttay[7]),
 			SellPrice:        gconv.Int(resultAttay[8]),
 			Ex:               gconv.Int(resultAttay[9]),
-			Count:            gconv.Int(bagInfoList[j]),
+			Count:            GetPlantCount(uId, gconv.Int(resultAttay[0])),
 		}
 		bagInfoList[j] = bagInfo
 		j++
