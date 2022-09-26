@@ -10,10 +10,10 @@ import (
 func FieldOpen(r *ghttp.Request) {
 	verifyStatus, uId, userName := service.VerifySession(r)
 	if verifyStatus == true {
-		status := service.OpenField(userName, uId)
+		status, fieldId := service.OpenField(userName, uId)
 		if status == true {
 			r.Response.WriteJson(g.Map{
-				"Message": "开启成功",
+				"fieldId": fieldId,
 			})
 		} else {
 			returnErrCode(r, 423, "开启失败，资源不足")

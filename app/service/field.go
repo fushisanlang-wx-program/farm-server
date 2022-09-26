@@ -71,7 +71,7 @@ func GetFieldInfo(uId string) [18]model.FarmFieldInfoStructWithoutUserId {
 	return fieldInfo
 
 }
-func OpenField(userName, uId string) bool {
+func OpenField(userName, uId string) (bool, int) {
 	userFieldCount := dao.GetUserInfoFieldCount(userName)
 	if userFieldCount < 18 {
 		newFieldId := userFieldCount + 1
@@ -83,13 +83,13 @@ func OpenField(userName, uId string) bool {
 		if userLevel >= openFieldNeedLevel && userMoney >= openFieldNeedMoney {
 			dao.OpenField(userName, uId, newFieldId)
 			dao.ChangeMoney(userName, userMoney-openFieldNeedMoney)
-			return true
+			return true, newFieldId
 		} else {
-			return false
+			return false, 0
 		}
 
 	} else {
-		return false
+		return false, 0
 	}
 }
 
