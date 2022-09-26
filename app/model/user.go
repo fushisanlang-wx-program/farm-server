@@ -16,3 +16,10 @@ type UserRegisterStruct struct {
 	Money      int
 	Ex         int
 }
+type UserInfoStruct struct {
+	UserName   string
+	Money      int
+	Ex         int
+	Level      int
+	FieldCount int
+}

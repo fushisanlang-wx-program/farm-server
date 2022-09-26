@@ -71,8 +71,11 @@ func GetFieldInfo(uId string) [18]model.FarmFieldInfoStructWithoutUserId {
 	return fieldInfo
 
 }
+func getFieldCount(userName string) int {
+	return dao.GetUserInfoFieldCount(userName)
+}
 func OpenField(userName, uId string) (bool, int) {
-	userFieldCount := dao.GetUserInfoFieldCount(userName)
+	userFieldCount := getFieldCount(userName)
 	if userFieldCount < 18 {
 		newFieldId := userFieldCount + 1
 		userEx := dao.GetEx(userName)

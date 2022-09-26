@@ -7,6 +7,16 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 )
 
+func UserInfo(r *ghttp.Request) {
+	verifyStatus, uId, userName := service.VerifySession(r)
+	if verifyStatus == true {
+
+		r.Response.WriteJson(service.UserInfo(uId, userName))
+
+	} else {
+		returnErrCode(r, 401, "用户校验失败,请重新登录")
+	}
+}
 func UserRegister(r *ghttp.Request) {
 	userName := r.Get("UserName").String()
 	password := r.Get("Password").String()

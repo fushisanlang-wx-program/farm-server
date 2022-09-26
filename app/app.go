@@ -29,6 +29,7 @@ func Run() {
 	group := s.Group("/user")
 	group.POST("/register", api.UserRegister)
 	group.POST("/signin", api.UserSignIn)
+	group.POST("/info", api.UserInfo)
 	group = s.Group("/field")
 	group.GET("/info", api.FieldInfo)
 	group.GET("/info/{fieldId}", api.FieldInfoById)

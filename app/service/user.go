@@ -81,3 +81,17 @@ func GetUid(userName string) string {
 		return ""
 	}
 }
+func UserInfo(uId, userName string) model.UserInfoStruct {
+	userEx := getEx(userName)
+	userLevel, userEx := getLevel(userEx)
+	userMoney := getMoney(userName)
+	userFieldCount := getFieldCount(userName)
+	var userInfo = model.UserInfoStruct{
+		UserName:   userName,
+		Money:      userMoney,
+		Ex:         userEx,
+		Level:      userLevel,
+		FieldCount: userFieldCount,
+	}
+	return userInfo
+}
