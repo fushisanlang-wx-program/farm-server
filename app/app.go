@@ -41,8 +41,8 @@ func Run() {
 	group = s.Group("/bag")
 	group.GET("/info", api.BagInfo)
 	group = s.Group("/store")
-	group.GET("/buy", api.StoreBuy)
-	group.POST("/list", api.StoreList)
+	group.POST("/buy", api.StoreBuy)
+	group.GET("/list", api.StoreList)
 
 	s.Run()
 }
