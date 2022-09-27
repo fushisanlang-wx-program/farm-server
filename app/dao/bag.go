@@ -2,6 +2,7 @@ package dao
 
 import (
 	"farm/app/model"
+	"fmt"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
@@ -9,6 +10,12 @@ import (
 )
 
 func SetBag(uId string, bagId, count int) {
+	fmt.Println("---------")
+	fmt.Println(uId)
+	fmt.Println(bagId)
+	fmt.Println(count)
+	fmt.Println("---------")
+
 	var (
 		ctx = gctx.New()
 	)

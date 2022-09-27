@@ -1,6 +1,8 @@
 package dao
 
 import (
+	"fmt"
+
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/gogf/gf/v2/util/gconv"
@@ -35,6 +37,8 @@ func ChangeMoney(userName string, money int) {
 	var (
 		ctx = gctx.New()
 	)
+	fmt.Println(userName)
+	fmt.Println(money)
 	_, err := g.Redis("data").Do(ctx, "HMSET", userName, "Money", money)
 	if err != nil {
 		panic(err)
