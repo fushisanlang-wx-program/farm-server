@@ -34,6 +34,8 @@ func Run() {
 	group.GET("/info", api.FieldInfo)
 	group.GET("/info/{fieldId}", api.FieldInfoById)
 	group.GET("/open", api.FieldOpen)
+	group.GET("/getopenneed", api.GetFieldOpenNeed)
+
 	group.POST("/plant", api.FieldPlant)
 	group.POST("/harvest", api.FieldHarvest)
 	group.POST("/upgrade", api.FieldUpgrade)

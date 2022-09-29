@@ -22,7 +22,22 @@ func FieldOpen(r *ghttp.Request) {
 		returnErrCode(r, 401, "用户校验失败,请重新登录")
 	}
 }
-
+func GetFieldOpenNeed(r *ghttp.Request) {
+	verifyStatus, uId, userName := service.VerifySession(r)
+	if verifyStatus == true {
+		level, money := service.GetOpenFieldNeed(userName, uId)
+		if level != 0 && money != 0 {
+			r.Response.WriteJson(g.Map{
+				"NeedLevel": level,
+				"NeedMoney": money,
+			})
+		} else {
+			returnErrCode(r, 423, "开启失败，资源不足")
+		}
+	} else {
+		returnErrCode(r, 401, "用户校验失败,请重新登录")
+	}
+}
 func FieldInfo(r *ghttp.Request) {
 	verifyStatus, uId, _ := service.VerifySession(r)
 	if verifyStatus == true {
