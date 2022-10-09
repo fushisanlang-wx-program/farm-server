@@ -136,8 +136,13 @@ func FieldUpgrade(uId, userName string, fieldId int) bool {
 		//再成熟时间
 		ReMatureTime := plantInfo.ReMature * 60
 
+		now := gconv.Int(time.Now().Unix())
+
+		//成熟时间
+		maturationTime := ReMatureTime + now
+
 		//更改土地状态
-		dao.FieldUpgrade(uId, fieldId, ReMatureTime, fieldInfo.ReMature+1)
+		dao.FieldUpgrade(uId, fieldId, maturationTime, fieldInfo.ReMature+1)
 
 		//创建一个field副本，用于确认是否成熟
 		dao.FieldCopy(uId, fieldId, ReMatureTime)
