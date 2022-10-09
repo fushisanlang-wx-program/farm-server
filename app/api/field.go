@@ -83,6 +83,54 @@ func FieldPlant(r *ghttp.Request) {
 	}
 }
 
+func FieldPlantAll(r *ghttp.Request) {
+	//fieldId := r.Get("fieldId").Int()
+	plantId := r.Get("plantId").Int()
+
+	if plantId < 1 || plantId > 50 {
+		returnErrCode(r, 404, "id异常")
+	} else {
+		verifyStatus, uId, userName := service.VerifySession(r)
+		if verifyStatus == true {
+			plantStatus := service.FieldPlantAll(uId, userName, plantId)
+			if plantStatus == true {
+				fieldInfo := service.GetFieldInfo(uId)
+				r.Response.WriteJson(fieldInfo)
+			} else {
+				returnErrCode(r, 423, "种植失败，资源异常")
+			}
+		} else {
+			returnErrCode(r, 401, "用户校验失败,请重新登录")
+		}
+	}
+}
+
+func FieldHarvestAll(r *ghttp.Request) {
+
+	verifyStatus, uId, userName := service.VerifySession(r)
+	if verifyStatus == true {
+		service.FieldHarvestAll(uId, userName)
+		fieldInfo := service.GetFieldInfo(uId)
+		r.Response.WriteJson(fieldInfo)
+	} else {
+		returnErrCode(r, 401, "用户校验失败,请重新登录")
+	}
+
+}
+
+func FieldAuto(r *ghttp.Request) {
+
+	verifyStatus, uId, userName := service.VerifySession(r)
+	if verifyStatus == true {
+		service.FieldAuto(uId, userName)
+		fieldInfo := service.GetFieldInfo(uId)
+		r.Response.WriteJson(fieldInfo)
+	} else {
+		returnErrCode(r, 401, "用户校验失败,请重新登录")
+	}
+
+}
+
 func FieldHarvest(r *ghttp.Request) {
 	fieldId := r.Get("fieldId").Int()
 	if fieldId > 18 || fieldId < 1 {
@@ -90,14 +138,12 @@ func FieldHarvest(r *ghttp.Request) {
 	} else {
 		verifyStatus, uId, userName := service.VerifySession(r)
 		if verifyStatus == true {
-
 			harvestStatus, harvestInfo := service.FieldHarvest(uId, userName, fieldId)
 			if harvestStatus == true {
 				r.Response.WriteJson(harvestInfo)
 			} else {
 				returnErrCode(r, 423, "收获失败，资源异常")
 			}
-
 		} else {
 			returnErrCode(r, 401, "用户校验失败,请重新登录")
 		}
@@ -111,7 +157,6 @@ func FieldEradicate(r *ghttp.Request) {
 	} else {
 		verifyStatus, uId, userName := service.VerifySession(r)
 		if verifyStatus == true {
-
 			eradicateStatus := service.FieldEradicate(uId, userName, fieldId)
 			if eradicateStatus == true {
 				fieldInfo := service.FieldInfoById(uId, fieldId)
@@ -119,7 +164,6 @@ func FieldEradicate(r *ghttp.Request) {
 			} else {
 				returnErrCode(r, 423, "提升失败，资源异常")
 			}
-
 		} else {
 			returnErrCode(r, 401, "用户校验失败,请重新登录")
 		}
@@ -132,7 +176,6 @@ func FieldUpgrade(r *ghttp.Request) {
 	} else {
 		verifyStatus, uId, userName := service.VerifySession(r)
 		if verifyStatus == true {
-
 			upgradeStatus := service.FieldUpgrade(uId, userName, fieldId)
 			if upgradeStatus == true {
 				fieldInfo := service.FieldInfoById(uId, fieldId)
@@ -140,9 +183,19 @@ func FieldUpgrade(r *ghttp.Request) {
 			} else {
 				returnErrCode(r, 423, "提升失败，资源异常")
 			}
-
 		} else {
 			returnErrCode(r, 401, "用户校验失败,请重新登录")
 		}
 	}
+}
+func FieldUpgradeAll(r *ghttp.Request) {
+	verifyStatus, uId, userName := service.VerifySession(r)
+	if verifyStatus == true {
+		service.FieldUpgradeAll(uId, userName)
+		fieldInfo := service.GetFieldInfo(uId)
+		r.Response.WriteJson(fieldInfo)
+	} else {
+		returnErrCode(r, 401, "用户校验失败,请重新登录")
+	}
+
 }

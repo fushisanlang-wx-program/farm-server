@@ -28,6 +28,7 @@ func FieldInfoById(uId string, fieldId int) model.FarmFieldInfoStructWithoutUser
 	return fieldInfo
 
 }
+
 func FieldPlant(uId, userName string, fieldId, plantId int) bool {
 	//拿到作物信息
 	plantInfo := dao.GetPlantInfo(plantId)
@@ -62,6 +63,33 @@ func FieldPlant(uId, userName string, fieldId, plantId int) bool {
 		return true
 	}
 }
+
+func FieldPlantAll(uId, userName string, plantId int) bool {
+	//拿到作物信息
+	plantInfo := dao.GetPlantInfo(plantId)
+
+	//判断种子数量
+	count := dao.GetPlantCount(uId, plantId)
+
+	//判断用户等级是否足够
+	userEx := getEx(userName)
+	userLevel := GetLevel(userEx)
+	if count < 1 || userLevel < plantInfo.Level {
+		return false
+	} else {
+		for fieldId := 1; fieldId <= 18; fieldId++ {
+			fieldStatus := dao.FieldInfoById(uId, fieldId).Status
+			if fieldStatus == 1 && count > 0 {
+				FieldPlant(uId, userName, fieldId, plantId)
+				count = count - 1
+			} else if fieldStatus == 0 {
+				break
+			}
+		}
+		return true
+	}
+}
+
 func SetFieldCopy(uId string, fieldId, plantMaturationTime int) {
 	dao.FieldCopy(uId, fieldId, plantMaturationTime)
 }
@@ -135,18 +163,13 @@ func FieldUpgrade(uId, userName string, fieldId int) bool {
 		plantInfo := dao.GetPlantInfo(fieldInfo.PlantId)
 		//再成熟时间
 		ReMatureTime := plantInfo.ReMature * 60
-
 		now := gconv.Int(time.Now().Unix())
-
 		//成熟时间
 		maturationTime := ReMatureTime + now
-
 		//更改土地状态
 		dao.FieldUpgrade(uId, fieldId, maturationTime, fieldInfo.ReMature+1)
-
 		//创建一个field副本，用于确认是否成熟
 		dao.FieldCopy(uId, fieldId, ReMatureTime)
-
 		return true
 	} else {
 		//不能升级
@@ -198,4 +221,41 @@ func FieldHarvest(uId, userName string, fieldId int) (bool, model.HarvestInfoStr
 		//不能收获
 		return false, harvestInfoStruct
 	}
+}
+
+func FieldUpgradeAll(uId, userName string) {
+	for fieldId := 1; fieldId <= 18; fieldId++ {
+		fieldStatus := dao.FieldInfoById(uId, fieldId).Status
+
+		if fieldStatus == 9 {
+			FieldUpgrade(uId, userName, fieldId)
+		} else if fieldStatus == 0 {
+			break
+		}
+	}
+
+}
+func FieldHarvestAll(uId, userName string) {
+	for fieldId := 1; fieldId <= 18; fieldId++ {
+		fieldStatus := dao.FieldInfoById(uId, fieldId).Status
+		if fieldStatus == 3 {
+			FieldHarvest(uId, userName, fieldId)
+		} else if fieldStatus == 0 {
+			break
+		}
+	}
+
+}
+func FieldAuto(uId, userName string) {
+	for fieldId := 1; fieldId <= 18; fieldId++ {
+		fieldStatus := dao.FieldInfoById(uId, fieldId).Status
+		if fieldStatus == 3 {
+			FieldHarvest(uId, userName, fieldId)
+		} else if fieldStatus == 9 {
+			FieldUpgrade(uId, userName, fieldId)
+		} else if fieldStatus == 0 {
+			break
+		}
+	}
+
 }
