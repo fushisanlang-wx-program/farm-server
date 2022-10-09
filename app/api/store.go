@@ -10,7 +10,7 @@ import (
 func StoreBuy(r *ghttp.Request) {
 	plantId := r.Get("plantId").Int()
 	buyCount := r.Get("buyCount").Int()
-	if plantId == 0 || plantId == 0 {
+	if plantId == 0 || buyCount == 0 {
 		returnErrCode(r, 417, "数据空")
 	} else {
 		verifyStatus, uId, userName := service.VerifySession(r)
