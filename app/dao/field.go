@@ -82,6 +82,18 @@ func FieldInfoById(uId string, fieldId int) model.FarmFieldInfoStructWithoutUser
 			panic(err)
 		}
 	}
+	if fieldInfo.ReMature == 1 {
+		fieldInfo.PlantName = "上品•" + fieldInfo.PlantName
+	} else if fieldInfo.ReMature == 2 {
+		fieldInfo.PlantName = "精品•" + fieldInfo.PlantName
+	} else if fieldInfo.ReMature == 3 {
+		fieldInfo.PlantName = "珍品•" + fieldInfo.PlantName
+	} else if fieldInfo.ReMature == 4 {
+		fieldInfo.PlantName = "极品•" + fieldInfo.PlantName
+	} else if fieldInfo.ReMature == 5 {
+		fieldInfo.PlantName = "绝品•" + fieldInfo.PlantName
+	}
+
 	return fieldInfo
 
 }
@@ -91,6 +103,7 @@ func GetFieldInfo(uId string) [18]model.FarmFieldInfoStructWithoutUserId {
 	for i := 1; i <= 18; i++ {
 		fieldInfo := FieldInfoById(uId, i)
 		fieldInfoList[i-1] = fieldInfo
+
 	}
 	return fieldInfoList
 }
