@@ -111,6 +111,8 @@ func GetOpenFieldNeed(userName, uId string) (int, int) {
 		openFieldNeedMoney := dao.GetOpenFieldNeedMoney(newFieldId)
 		openFieldNeedLevel := dao.GetOpenFieldNeedLevel(newFieldId)
 		return openFieldNeedLevel, openFieldNeedMoney
+	} else if userFieldCount == 18 {
+		return -1, -1
 	} else {
 		return 0, 0
 	}
